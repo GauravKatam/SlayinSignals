@@ -1,8 +1,16 @@
-function [sampled_signal] = sample(signal,frequency);
-    v = zeros(1,size(signal,2));
-    frequency = frequency*1000;
-    for i = 1:1/frequency:size(v,2)
-        v(round(i)) = 1; 
+function [sampled_signal] = sample(frequencies,f1, sample_freq);
+    %interval between the samples
+    time_intv = 1/sample_freq;
+    
+    %time vector
+    t = 0:time_intv:10/f1;
+    
+    sampled_signal = zeros(size(t));
+    
+    for i = 1:size(sampled_signal, 2)
+        sampled_signal(i) = sum(sin(2*pi*t(i)*frequencies));
     end
-    sampled_signal = signal.*v;
+    
+    %drawing the samples
+    drawsamples(sampled_signal, t);
 end
